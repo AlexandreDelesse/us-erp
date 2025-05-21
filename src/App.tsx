@@ -1,7 +1,8 @@
 import "./App.css";
 import { BrowserRouter, Link, Route, Routes } from "react-router";
-import { AppBar, Button, Container, Toolbar } from "@mui/material";
+import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
 import VehiclePage from "./pages/VehiclePage";
+import UserAvatar from "./components/User/UserAvatar";
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
           <Button color="inherit" component={Link} to="/vehicules">
             Véhicules
           </Button>
+          <Box flexGrow={1} />
+
+          <UserAvatar />
         </Toolbar>
       </AppBar>
       <Container sx={{ mt: 4 }}>
