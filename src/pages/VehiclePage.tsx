@@ -1,12 +1,26 @@
-import { Box, Divider, Typography } from "@mui/material";
-import VehicleTable from "../components/Vehicles/VehiclesTable";
+import { Grid } from "@mui/material";
+import VehicleList from "../components/Vehicles/VehicleList";
+import { useState } from "react";
+import type { IVehicle } from "../components/Vehicles/IVehicle";
+import VehiculeTabs from "../components/Vehicles/VehiculeTabs";
 
 export default function VehiclePage() {
-  return (
-    <>
-      <Typography variant="h5">Liste des véhicules</Typography>
+  const [selectedVehicle, setSelectedVehicle] = useState<IVehicle | undefined>(
+    undefined
+  );
 
-      <VehicleTable />
-    </>
+  return (
+    <Grid container spacing={3}>
+      <Grid size={4}>
+        <VehicleList
+          selectedVehicle={selectedVehicle}
+          onSelectVehicle={(v) => setSelectedVehicle(v)}
+        />
+      </Grid>
+
+      <Grid size={8}>
+        <VehiculeTabs vehicle={selectedVehicle} />
+      </Grid>
+    </Grid>
   );
 }

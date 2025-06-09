@@ -3,6 +3,9 @@ import { BrowserRouter, Link, Route, Routes } from "react-router";
 import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
 import VehiclePage from "./pages/VehiclePage";
 import UserAvatar from "./components/User/UserAvatar";
+import VersionDisplay from "./components/Utils/VersionDisplay";
+import Dashboard from "./pages/Dashboard";
+import SaisieMutuellePage from "./pages/SaisieMutuellePage";
 
 function App() {
   return (
@@ -18,6 +21,10 @@ function App() {
           <Button color="inherit" component={Link} to="/vehicules">
             Véhicules
           </Button>
+          <Button color="inherit" component={Link} to="/SaisieMutuelle">
+            Mutuelles
+          </Button>
+
           <Box flexGrow={1} />
 
           <UserAvatar />
@@ -25,10 +32,12 @@ function App() {
       </AppBar>
       <Container sx={{ mt: 4 }}>
         <Routes>
-          <Route path="/" element={<div>Home</div>} />
+          <Route path="/" element={<Dashboard />}></Route>
           <Route path="/users" element={<div>Users</div>} />
           <Route path="/vehicules" element={<VehiclePage />} />
+          <Route path="/SaisieMutuelle" element={<SaisieMutuellePage />} />
         </Routes>
+        <VersionDisplay />
       </Container>
     </BrowserRouter>
   );

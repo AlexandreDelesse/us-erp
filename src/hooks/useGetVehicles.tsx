@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 
-import type { Vehicle } from "../components/Vehicles/IVehicle";
 import { mockVehicles } from "../mock-data";
+import type { IVehicle } from "../components/Vehicles/IVehicle";
 
 export default function useGetVehicles() {
-  const getVehicles = async (): Promise<Vehicle[]> => {
+  const getVehicles = async (): Promise<IVehicle[]> => {
     try {
       return await mockVehicles;
     } catch (error) {
