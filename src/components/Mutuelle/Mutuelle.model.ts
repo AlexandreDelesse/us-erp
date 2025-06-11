@@ -1,4 +1,4 @@
 export interface Mutuelle {
   name: string;
-  amcNb: string;
+  amc: string;
 }

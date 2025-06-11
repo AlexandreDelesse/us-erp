@@ -6,7 +6,6 @@ import { Box, Divider, Typography } from "@mui/material";
 import type { IVehicle } from "../IVehicle";
 
 export default function VehicleDetail(props: { vehicle?: IVehicle }) {
-  console.log(props.vehicle);
   if (!props.vehicle)
     return (
       <Box

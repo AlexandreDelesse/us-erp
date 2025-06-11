@@ -7,25 +7,29 @@ export const getMutuelles = async () => {
 
 export const getMutuelleByAmc = async (amcNb: string) => {
   const mutuelles = await getMutuelles();
-  return mutuelles.find((m: Mutuelle) => m.amcNb == amcNb);
+  return mutuelles.find((m: Mutuelle) => m.amc == amcNb);
 };
 
 export const postMutuelle = async (newMutuelle: Mutuelle) => {
-  const mutuelle = await getMutuelleByAmc(newMutuelle.amcNb);
+  const mutuelle = await getMutuelleByAmc(newMutuelle.amc);
+  const mutuelles = await getMutuelles();
+  let toStore = [];
   if (!mutuelle) {
-    const mutuelles = await getMutuelles();
-    await localStorage.setItem(
-      "mutuelle",
-      JSON.stringify([...mutuelles, newMutuelle])
+    toStore = [...mutuelles, newMutuelle];
+  } else {
+    toStore = mutuelles.map((m: Mutuelle) =>
+      m.amc == newMutuelle.amc ? newMutuelle : m
     );
   }
+  localStorage.setItem("mutuelle", JSON.stringify(toStore));
+  return toStore;
 };
 
 export const deleteMutuelle = async (amcNb: string) => {
   const mutuelle = await getMutuelles();
   await localStorage.setItem(
     "mutuelle",
-    JSON.stringify(mutuelle.filter((m: Mutuelle) => m.amcNb != amcNb))
+    JSON.stringify(mutuelle.filter((m: Mutuelle) => m.amc != amcNb))
   );
 };
 
@@ -33,8 +37,6 @@ export const updateMutuelle = async (amcNb: string, update: Mutuelle) => {
   const mutuelle = await getMutuelles();
   await localStorage.setItem(
     "mutuelle",
-    JSON.stringify(
-      mutuelle.map((m: Mutuelle) => (m.amcNb == amcNb ? update : m))
-    )
+    JSON.stringify(mutuelle.map((m: Mutuelle) => (m.amc == amcNb ? update : m)))
   );
 };

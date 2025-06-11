@@ -1,4 +1,4 @@
 export interface Concentrateur {
-  amcNb: string;
+  amc: string;
   name: string;
 }

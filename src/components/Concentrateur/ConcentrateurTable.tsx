@@ -6,14 +6,15 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import type { Mutuelle } from "./Mutuelle.model";
-import DeleteIcon from "@mui/icons-material/Delete";
 
-interface MutuelleTableProps {
-  mutuelles: Mutuelle[];
+import DeleteIcon from "@mui/icons-material/Delete";
+import type { Concentrateur } from "./Consentrateur.model";
+
+interface ConcentrateurTableProps {
+  concentrateurs: Concentrateur[];
   onDelete: (amc: string) => void;
 }
-export default function MutuelleTable(props: MutuelleTableProps) {
+export default function ConcentrateurTable(props: ConcentrateurTableProps) {
   return (
     <Table aria-label="simple table" size="small">
       <TableHead>
@@ -24,7 +25,7 @@ export default function MutuelleTable(props: MutuelleTableProps) {
         </TableRow>
       </TableHead>
       <TableBody>
-        {props.mutuelles.map((row) => (
+        {props.concentrateurs.map((row) => (
           <TableRow
             key={row.name}
             sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

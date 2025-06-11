@@ -1,24 +1,26 @@
 import { useRef, useState, type ChangeEvent } from "react";
-import type { Mutuelle } from "./Mutuelle.model";
+
 import { Box, Button, TextField } from "@mui/material";
 
 import { useMutation } from "@tanstack/react-query";
-import { postMutuelle } from "./Mutuelle.service";
+import { postConcentrateur } from "./Concentrateur.service";
 import { queryClient } from "../../queryClient";
+import type { Concentrateur } from "./Consentrateur.model";
 
-export default function MutuelleForm() {
+
+export default function ConcentrateurForm() {
   const mutation = useMutation({
-    mutationKey: ["mutuelles"],
-    mutationFn: (m: Mutuelle) => postMutuelle(m),
+    mutationKey: ["concentrateurs"],
+    mutationFn: (m: Concentrateur) => postConcentrateur(m),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["mutuelles"] });
+      queryClient.invalidateQueries({ queryKey: ["concentrateurs"] });
       setFormValue(defaulValue);
       inputRef.current?.focus();
     },
   });
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const defaulValue: Mutuelle = { amc: "", name: "" };
+  const defaulValue: Concentrateur = { amc: "", name: "" };
 
   const [formValue, setFormValue] = useState(defaulValue);
 
@@ -44,7 +46,7 @@ export default function MutuelleForm() {
           name={key}
           size="small"
           key={key}
-          value={formValue[key as keyof Mutuelle]}
+          value={formValue[key as keyof Concentrateur]}
           onChange={updateForm}
           onKeyUp={handleKeyUp}
           label={key}
