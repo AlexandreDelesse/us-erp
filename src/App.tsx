@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Link, Route, Routes } from "react-router";
+import { HashRouter, Link, Route, Routes } from "react-router";
 import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
 import VehiclePage from "./pages/VehiclePage";
 import UserAvatar from "./components/User/UserAvatar";
@@ -9,7 +9,7 @@ import SaisieMutuellePage from "./pages/SaisieMutuellePage";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <AppBar position="static">
         <Toolbar>
           <Button color="inherit" component={Link} to="/">
@@ -39,7 +39,7 @@ function App() {
         </Routes>
         <VersionDisplay />
       </Container>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
