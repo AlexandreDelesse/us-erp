@@ -15,7 +15,7 @@ import { SnackbarProvider } from "notistack";
 createRoot(document.getElementById("root")!).render(
   // <StrictMode>
   <ReactKeycloakProvider
-    initOptions={{ onLoad: "check-sso", pkceMethod: "S256" }}
+    initOptions={{ onLoad: "login-required", pkceMethod: "S256" }}
     authClient={keycloak}
     LoadingComponent={<LogoLoader LoadingText="Keycloak connection" />}
   >
