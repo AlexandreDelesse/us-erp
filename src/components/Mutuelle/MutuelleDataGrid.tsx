@@ -40,11 +40,11 @@ export default function MutuelleDataGrid(props: MutuelleDataGridProps) {
     if (newRow.isNew) {
       let { isNew, ...r } = newRow;
       r.ID = 0;
-      props.onCreate(r);
+      await props.onCreate(r);
     } else {
       let { isNew, ...r } = newRow;
 
-      props.onUpdate(r);
+      await props.onUpdate(r);
     }
     // Remet la ligne dans l’état "non nouveau"
     setRows((prev) =>
