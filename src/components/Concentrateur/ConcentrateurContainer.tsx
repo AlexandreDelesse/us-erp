@@ -18,8 +18,8 @@ export default function ConcentrateurContainer() {
   const updateMutation = useUpdateConcentrator();
 
   const handleDelete = (id: number) => deleteMutation.mutate(id);
-  const handleCreate = (c: Concentrateur) => createMutation.mutate(c);
-  const handleUpdate = (c: Concentrateur) => updateMutation.mutate(c);
+  const handleCreate = async (c: Concentrateur) => createMutation.mutate(c);
+  const handleUpdate = async (c: Concentrateur) => updateMutation.mutate(c);
 
   if (query.isLoading) return <LogoLoader />;
   if (query.isError) return <ErrorHandler error={query.error} />;

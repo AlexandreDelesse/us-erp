@@ -21,8 +21,8 @@ export default function MutuelleContainer(props: MutuelleContainerProps) {
   const updateMutation = useUpdateMutuelle();
 
   const handleDelete = (id: number) => deleteMutation.mutate(id);
-  const handleCreate = (m: MutuelleCmd) => createMutation.mutate(m);
-  const handleUpdate = (m: Mutuelle) => updateMutation.mutate(m);
+  const handleCreate = async (m: MutuelleCmd) => createMutation.mutate(m);
+  const handleUpdate = async (m: Mutuelle) => updateMutation.mutate(m);
 
   if (query.isLoading) return <LogoLoader />;
   if (query.isError) return <ErrorHandler error={query.error} />;

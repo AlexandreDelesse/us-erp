@@ -9,8 +9,8 @@ import { useSnackbar } from "notistack";
 interface MutuelleDataGridProps {
   mutuelles: Mutuelle[];
   onDelete: (id: number) => void;
-  onUpdate: (m: Mutuelle) => void;
-  onCreate: (m: MutuelleCmd) => void;
+  onUpdate: (m: Mutuelle) => Promise<void>;
+  onCreate: (m: MutuelleCmd) => Promise<void>;
   title?: string;
   emptyModel: Mutuelle;
 }
