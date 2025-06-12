@@ -44,21 +44,26 @@ export default function ConcentrateurDataGrid(
     if (!newRow.AmcId || !newRow.AmoId || !newRow.AmoStart)
       throw new Error("Remplissez tous les champs");
 
-    if (newRow.isNew) {
-      let { isNew, ...r } = newRow;
-      r.Id = 0;
-      r.AmoEnd = r.AmoEnd == "" ? null : r.AmoEnd;
-      await props.onCreate(r);
-    } else {
-      let { isNew, ...r } = newRow;
-      r.AmoEnd = r.AmoEnd == "" ? null : r.AmoEnd;
-      await props.onUpdate(r);
+    try {
+      if (newRow.isNew) {
+        let { isNew, ...r } = newRow;
+        r.Id = 0;
+        r.AmoEnd = r.AmoEnd == "" ? null : r.AmoEnd;
+        await props.onCreate(r);
+      } else {
+        let { isNew, ...r } = newRow;
+        r.AmoEnd = r.AmoEnd == "" ? null : r.AmoEnd;
+        await props.onUpdate(r);
+      }
+      // Remet la ligne dans l’état "non nouveau"
+      setRows((prev) =>
+        prev.map((r) => (r.Id === newRow.Id ? { ...newRow, isNew: false } : r))
+      );
+      return newRow;
+    } catch (error) {
+      console.log("error in process", error);
+      throw error;
     }
-    // Remet la ligne dans l’état "non nouveau"
-    setRows((prev) =>
-      prev.map((r) => (r.Id === newRow.Id ? { ...newRow, isNew: false } : r))
-    );
-    return newRow;
   };
 
   const columns: GridColDef[] = [

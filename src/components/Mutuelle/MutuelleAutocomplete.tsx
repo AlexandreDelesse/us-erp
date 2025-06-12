@@ -19,15 +19,15 @@ export default function MutuelleAutocomplete(props: MutuelleAutocompleteProps) {
   const mutuelle = mutuellesQry.data?.find((m) => m.ID == props.value);
   return (
     <Autocomplete
+      fullWidth
       disablePortal
       options={
         mutuellesQry.data?.filter(
           (m) => m.IsConcentrator == props.isConcentrator
         ) ?? []
       }
-      sx={{ width: 300 }}
       value={mutuelle}
-      renderInput={(params) => <TextField {...params} variant="outlined"/>}
+      renderInput={(params) => <TextField {...params} variant="outlined" />}
       onChange={(_e, v) => props.onChange(v)}
       getOptionLabel={(option) => option.Name}
       getOptionKey={(option) => option.AMC}
