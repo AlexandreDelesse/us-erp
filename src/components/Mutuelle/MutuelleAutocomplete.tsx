@@ -27,9 +27,7 @@ export default function MutuelleAutocomplete(props: MutuelleAutocompleteProps) {
       }
       sx={{ width: 300 }}
       value={mutuelle}
-      renderInput={(params) => (
-        <TextField {...params} size="small" label="Mutuelle" />
-      )}
+      renderInput={(params) => <TextField {...params} variant="outlined"/>}
       onChange={(_e, v) => props.onChange(v)}
       getOptionLabel={(option) => option.Name}
       getOptionKey={(option) => option.AMC}

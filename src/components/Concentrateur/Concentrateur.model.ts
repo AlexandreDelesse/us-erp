@@ -3,5 +3,5 @@ export interface Concentrateur {
   AmoId: string;
   AmcId: string;
   AmoStart: string;
-  AmoEnd: string;
+  AmoEnd?: string | null;
 }

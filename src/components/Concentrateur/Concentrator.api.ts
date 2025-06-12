@@ -25,7 +25,7 @@ export const postConcentrator = async (cmd: Concentrateur) => {
 };
 
 export const putConcentrator = async (mutuelle: Concentrateur) => {
-  return (await client.put("Concentrator", mutuelle)).data;
+  return (await client.put("Concentrator/" + mutuelle.Id, mutuelle)).data;
   // const mutuelles = await getConcentrator();
   // return localStorage.setItem(
   //   "mutuelles",

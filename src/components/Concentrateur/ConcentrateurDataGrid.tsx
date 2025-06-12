@@ -4,18 +4,20 @@ import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import EditToolbar from "../Mutuelle/EditToolbar";
 import RenderMutuelleEditCell from "../Mutuelle/RenderMutuelleEditCell";
 import { useMutuelleNameMap } from "../Mutuelle/useMutuelle.service";
+import { useSnackbar } from "notistack";
 
 interface ConcentrateurDataGridProps {
   concentrateurs: Concentrateur[];
   onDelete: (id: number) => void;
-  onUpdate: (c: Concentrateur) => void;
-  onCreate: (c: Concentrateur) => void;
+  onUpdate: (c: Concentrateur) => Promise<void>;
+  onCreate: (c: Concentrateur) => Promise<void>;
   title?: string;
   emptyModel: Concentrateur;
 }
 export default function ConcentrateurDataGrid(
   props: ConcentrateurDataGridProps
 ) {
+  const { enqueueSnackbar } = useSnackbar();
   const [rows, setRows] = useState<(Concentrateur & { isNew?: boolean })[]>(
     props.concentrateurs
   );
@@ -35,19 +37,26 @@ export default function ConcentrateurDataGrid(
     setRows((prev) => [newRow, ...prev]);
   };
 
-  const processRowUpdate = async (newRow: any) => {
+  const processRowUpdate = async (
+    newRow: Concentrateur & { isNew?: boolean }
+  ) => {
+    console.log("new row process", newRow);
+    if (!newRow.AmcId || !newRow.AmoId || !newRow.AmoStart)
+      throw new Error("Remplissez tous les champs");
+
     if (newRow.isNew) {
       let { isNew, ...r } = newRow;
-      r.ID = 0;
-      props.onCreate(r);
+      r.Id = 0;
+      r.AmoEnd = r.AmoEnd == "" ? null : r.AmoEnd;
+      await props.onCreate(r);
     } else {
       let { isNew, ...r } = newRow;
-
-      props.onUpdate(r);
+      r.AmoEnd = r.AmoEnd == "" ? null : r.AmoEnd;
+      await props.onUpdate(r);
     }
     // Remet la ligne dans l’état "non nouveau"
     setRows((prev) =>
-      prev.map((r) => (r.Id === newRow.ID ? { ...newRow, isNew: false } : r))
+      prev.map((r) => (r.Id === newRow.Id ? { ...newRow, isNew: false } : r))
     );
     return newRow;
   };
@@ -77,7 +86,7 @@ export default function ConcentrateurDataGrid(
       type: "date",
       width: 100,
       flex: 0.5,
-      valueGetter: (value) => new Date(value),
+      valueGetter: (value) => (value ? new Date(value) : value),
     },
     {
       field: "AmoEnd",
@@ -85,7 +94,7 @@ export default function ConcentrateurDataGrid(
       type: "date",
       width: 100,
       flex: 0.5,
-      valueGetter: (value) => new Date(value),
+      valueGetter: (value) => (value ? new Date(value) : value),
     },
   ];
 
@@ -100,7 +109,9 @@ export default function ConcentrateurDataGrid(
       rowModesModel={rowModeModels}
       onRowModesModelChange={setRowModeModels}
       processRowUpdate={processRowUpdate}
-      onProcessRowUpdateError={(e) => console.log(e)}
+      onProcessRowUpdateError={(e: Error) =>
+        enqueueSnackbar(e.message, { variant: "error" })
+      }
       showToolbar
       getRowId={(row: Concentrateur) => row.Id}
       editMode="row"

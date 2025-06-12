@@ -4,6 +4,7 @@ import EditToolbar from "./EditToolbar";
 import { useEffect, useState } from "react";
 import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import { useSnackbar } from "notistack";
 
 interface MutuelleDataGridProps {
   mutuelles: Mutuelle[];
@@ -14,6 +15,7 @@ interface MutuelleDataGridProps {
   emptyModel: Mutuelle;
 }
 export default function MutuelleDataGrid(props: MutuelleDataGridProps) {
+  const { enqueueSnackbar } = useSnackbar();
   const [rows, setRows] = useState<(Mutuelle & { isNew?: boolean })[]>(
     props.mutuelles
   );
@@ -32,7 +34,9 @@ export default function MutuelleDataGrid(props: MutuelleDataGridProps) {
     setRows((prev) => [newRow, ...prev]);
   };
 
-  const processRowUpdate = async (newRow: any) => {
+  const processRowUpdate = async (newRow: Mutuelle & { isNew?: boolean }) => {
+    if (!newRow.AMC || !newRow.Name || !newRow.TeletransNumber)
+      throw new Error("Tous les champs doivent être saisies !");
     if (newRow.isNew) {
       let { isNew, ...r } = newRow;
       r.ID = 0;
@@ -99,7 +103,9 @@ export default function MutuelleDataGrid(props: MutuelleDataGridProps) {
       rowModesModel={rowModeModels}
       onRowModesModelChange={setRowModeModels}
       processRowUpdate={processRowUpdate}
-      onProcessRowUpdateError={(e) => console.log(e)}
+      onProcessRowUpdateError={(e: Error) =>
+        enqueueSnackbar(e.message, { variant: "error" })
+      }
       showToolbar
       getRowId={(row: Mutuelle) => row.ID}
       editMode="row"
