@@ -12,7 +12,7 @@ export default function RenderMutuelleEditCell(
         params.api.setEditCellValue({
           id: params.id,
           field: params.field,
-          value: newValue,
+          value: newValue?.ID,
         });
       }}
     />

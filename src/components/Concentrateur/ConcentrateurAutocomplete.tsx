@@ -2,7 +2,7 @@ import LogoLoader from "../Utils/LogoLoader";
 import ErrorHandler from "../Utils/Error/ErrorHandler";
 import { Autocomplete, TextField } from "@mui/material";
 import type { Mutuelle } from "../Mutuelle/Mutuelle.model";
-import useGetConcentrateur from "./useGetConcentrateur";
+import { useGetMutuelle } from "../Mutuelle/useMutuelle.service";
 
 interface MutuelleAutocompleteProps {
   value: Mutuelle | null;
@@ -11,7 +11,7 @@ interface MutuelleAutocompleteProps {
 export default function ConcentrateurAutocomplete(
   props: MutuelleAutocompleteProps
 ) {
-  const concentrateurQry = useGetConcentrateur();
+  const concentrateurQry = useGetMutuelle();
 
   if (concentrateurQry.isLoading) return <LogoLoader />;
 
@@ -27,8 +27,8 @@ export default function ConcentrateurAutocomplete(
         <TextField {...params} size="small" label="Concentrateur" />
       )}
       onChange={(_e, v) => props.onChange(v)}
-      getOptionLabel={(option) => option.name}
-      getOptionKey={(option) => option.amc}
+      getOptionLabel={(option) => option.Name}
+      getOptionKey={(option) => option.AMC}
     />
   );
 }

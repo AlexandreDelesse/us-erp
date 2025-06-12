@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import logoLoader from "../../Assets/Images/logo-loader.gif";
+import logoLoader from "../../assets/Images/logo-loader.gif";
 
 export default function LogoLoader(props: { LoadingText?: string }) {
   return (

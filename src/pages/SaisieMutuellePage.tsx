@@ -1,7 +1,6 @@
-import { Box, Divider, Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import ConcentrateurContainer from "../components/Concentrateur/ConcentrateurContainer";
 import MutuelleContainer from "../components/Mutuelle/MutuelleContainer";
-import ConcentMutuelContainer from "../components/ConcentMutuel/ConcentMutuelContainer";
 import { useState } from "react";
 
 export default function SaisieMutuellePage() {
@@ -25,10 +24,10 @@ export default function SaisieMutuellePage() {
         <MutuelleContainer />
       </div>
       <div hidden={value !== 1}>
-        <ConcentrateurContainer />
+        <MutuelleContainer isConcentrator />
       </div>
       <div hidden={value !== 2}>
-        <ConcentMutuelContainer />
+        <ConcentrateurContainer />
       </div>
     </>
   );
