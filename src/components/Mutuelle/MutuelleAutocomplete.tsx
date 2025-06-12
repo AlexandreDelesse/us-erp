@@ -8,6 +8,7 @@ import { useGetMutuelle } from "./useMutuelle.service";
 interface MutuelleAutocompleteProps {
   value: number | null;
   onChange: (value: Mutuelle | null) => void;
+  isConcentrator?: boolean;
 }
 export default function MutuelleAutocomplete(props: MutuelleAutocompleteProps) {
   const mutuellesQry = useGetMutuelle();
@@ -19,7 +20,11 @@ export default function MutuelleAutocomplete(props: MutuelleAutocompleteProps) {
   return (
     <Autocomplete
       disablePortal
-      options={mutuellesQry.data ?? []}
+      options={
+        mutuellesQry.data?.filter(
+          (m) => m.IsConcentrator == props.isConcentrator
+        ) ?? []
+      }
       sx={{ width: 300 }}
       value={mutuelle}
       renderInput={(params) => (

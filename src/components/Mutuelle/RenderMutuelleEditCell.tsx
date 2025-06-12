@@ -3,10 +3,12 @@ import type { GridRenderEditCellParams } from "@mui/x-data-grid";
 import MutuelleAutocomplete from "./MutuelleAutocomplete";
 
 export default function RenderMutuelleEditCell(
-  params: GridRenderEditCellParams
+  params: GridRenderEditCellParams,
+  isConcentrator: boolean
 ) {
   return (
     <MutuelleAutocomplete
+      isConcentrator={isConcentrator}
       value={params.value ?? null}
       onChange={(newValue) => {
         params.api.setEditCellValue({

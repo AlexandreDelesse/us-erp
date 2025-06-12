@@ -59,7 +59,7 @@ export default function ConcentrateurDataGrid(
       width: 200,
       editable: true,
       flex: 1,
-      renderEditCell: (params) => RenderMutuelleEditCell(params),
+      renderEditCell: (params) => RenderMutuelleEditCell(params, false),
       renderCell: (params) => mutuelleNameMap.get(params.value) ?? params.value,
     },
     {
@@ -68,7 +68,7 @@ export default function ConcentrateurDataGrid(
       width: 200,
       editable: true,
       flex: 1,
-      renderEditCell: (params) => RenderMutuelleEditCell(params),
+      renderEditCell: (params) => RenderMutuelleEditCell(params, true),
       renderCell: (params) => mutuelleNameMap.get(params.value) ?? params.value,
     },
     {
