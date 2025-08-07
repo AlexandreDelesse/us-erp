@@ -24,7 +24,7 @@ export default function CustomDatePicker({
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={frFR}>
       <DatePicker
         value={value}
-        onChange={onChange}
+        // onChange={onChange}
         label={label}
         disabled={disabled}
         slotProps={{

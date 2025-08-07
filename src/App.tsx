@@ -6,34 +6,19 @@ import UserAvatar from "./components/User/UserAvatar";
 import VersionDisplay from "./components/Utils/VersionDisplay";
 import Dashboard from "./pages/Dashboard";
 import SaisieMutuellePage from "./pages/SaisieMutuellePage";
+import LoanPage from "./pages/LoanPage";
+import UserPage from "./pages/UserPage";
+import TopAppBar from "./components/AppBar/TopAppBar";
 
 function App() {
   return (
     <HashRouter>
-      <AppBar position="static">
-        <Toolbar>
-          <Button color="inherit" component={Link} to="/">
-            Home
-          </Button>
-          <Button color="inherit" component={Link} to="/users">
-            Users
-          </Button>
-          <Button color="inherit" component={Link} to="/vehicules">
-            Véhicules
-          </Button>
-          <Button color="inherit" component={Link} to="/SaisieMutuelle">
-            Mutuelles
-          </Button>
-
-          <Box flexGrow={1} />
-
-          <UserAvatar />
-        </Toolbar>
-      </AppBar>
+      <TopAppBar />
       <Container sx={{ mt: 4 }}>
         <Routes>
           <Route path="/" element={<Dashboard />}></Route>
-          <Route path="/users" element={<div>Users</div>} />
+          <Route path="/emprunts" element={<LoanPage />} />
+          <Route path="/users" element={<UserPage />} />
           <Route path="/vehicules" element={<VehiclePage />} />
           <Route path="/SaisieMutuelle" element={<SaisieMutuellePage />} />
         </Routes>
