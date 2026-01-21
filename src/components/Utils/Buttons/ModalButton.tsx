@@ -3,7 +3,6 @@ import {
   Button,
   IconButton,
   Modal,
-  Paper,
   type ButtonProps,
   type ModalProps,
 } from "@mui/material";

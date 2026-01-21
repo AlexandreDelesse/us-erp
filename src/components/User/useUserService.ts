@@ -15,8 +15,6 @@ export default function useUserService() {
     queryFn: () => getUsersMap(),
   });
 
-  const usersMap = usersMapQry.data ?? [];
-
   const mapUserCmd = useMutation({
     mutationKey: ["users"],
     mutationFn: mapUser,

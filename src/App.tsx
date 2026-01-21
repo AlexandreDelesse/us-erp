@@ -1,8 +1,7 @@
 import "./App.css";
-import { HashRouter, Link, Route, Routes } from "react-router";
-import { AppBar, Box, Button, Container, Toolbar } from "@mui/material";
+import { HashRouter, Route, Routes } from "react-router";
+import { Container } from "@mui/material";
 import VehiclePage from "./pages/VehiclePage";
-import UserAvatar from "./components/User/UserAvatar";
 import VersionDisplay from "./components/Utils/VersionDisplay";
 import Dashboard from "./pages/Dashboard";
 import SaisieMutuellePage from "./pages/SaisieMutuellePage";
