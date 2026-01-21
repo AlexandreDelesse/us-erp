@@ -10,7 +10,7 @@ import { useState } from "react";
 import type { UsUserDto } from "./User";
 
 export default function UsersAutocomplete(
-  props: Partial<AutocompleteProps<UsUserDto, false, false, false>>
+  props: Partial<AutocompleteProps<UsUserDto, false, false, false>>,
 ) {
   const [inputValue, setInputValue] = useState("");
 
@@ -19,7 +19,7 @@ export default function UsersAutocomplete(
   const filterOptions = (opts: UsUserDto[]) =>
     inputValue
       ? opts.filter((opt) =>
-          opt.EmployeeLabel.toLowerCase().includes(inputValue.toLowerCase())
+          opt.EmployeeLabel.toLowerCase().includes(inputValue.toLowerCase()),
         )
       : [];
 
@@ -27,6 +27,7 @@ export default function UsersAutocomplete(
   if (userQry.isError) return <ErrorHandler error={userQry.error} />;
 
   const users = userQry.data ?? [];
+  console.log("users ", users);
 
   return (
     <Autocomplete

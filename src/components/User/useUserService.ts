@@ -30,7 +30,7 @@ export default function useUserService() {
   });
 
   const userMapMap = new Map<number, string>(
-    users.map((u) => [u.EmployeeId, u.EmployeeLabel])
+    users.map((u) => [u.EmployeeId, u.EmployeeLabel]),
   );
 
   const getUserName = (id: number) => userMapMap.get(id);

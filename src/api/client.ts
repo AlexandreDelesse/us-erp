@@ -2,6 +2,7 @@ import axios from "axios";
 import keycloak from "../Keycloak/Keycloak";
 
 const BASE_URL = "https://intranet.urgencesante.fr:8090/api";
+const RH_BASE_URL = "https://intranet.urgencesante.fr:8097/";
 const REGUL_BASE_URL = "https://intranet.urgencesante.fr:8091";
 const NOTIFICATION_BASE_URL = "https://notification-api.delesse.net/api";
 const KEYCLOAK_BASE_URL = NOTIFICATION_BASE_URL;
@@ -24,6 +25,12 @@ export const keycloakApi = axios.create({
 
 export const regulApi = axios.create({
   baseURL: REGUL_BASE_URL,
+  timeout: 3000,
+  headers: { "Content-Type": "application/json" },
+});
+
+export const rhApi = axios.create({
+  baseURL: RH_BASE_URL,
   timeout: 3000,
   headers: { "Content-Type": "application/json" },
 });

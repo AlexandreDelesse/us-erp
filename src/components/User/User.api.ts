@@ -7,8 +7,12 @@ export const getUsers = async (_appId: string): Promise<UsUserDto[]> =>
 export const getUsersMap = async (): Promise<MapUserDto[]> =>
   (await regulApi.get(`/Users/Map`)).data;
 
-export const mapUser = async (cmd: MapUserCmd) =>
-  (await regulApi.post(`Users/Map/${"regulation"}`, cmd)).data;
+export const mapUser = async (
+  cmd: MapUserCmd & { application: "rh" | "regulation" },
+) => {
+  const { application, ...rest } = cmd;
+  return (await regulApi.post(`Users/Map/${cmd.application}`, rest)).data;
+};
 
 export const deleteUserMap = async (mapId: number) =>
   (await regulApi.delete(`/Users/Map/${mapId}`)).data;
