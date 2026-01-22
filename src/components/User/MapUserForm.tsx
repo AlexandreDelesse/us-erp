@@ -14,30 +14,38 @@ import type { MapUserCmd, UsUserDto } from "./User";
 import type { KcUserDto } from "../../Keycloak/KcUser";
 import EmployeesAutocomplete from "../Employee/EmployeesAutocomplete";
 import type { Employee } from "../Employee/Employee";
+import useAutocompleteOptions from "../Employee/useAutocompleteOptions";
+import type {
+  AutocompleteOption,
+  ContextKey,
+} from "../Employee/AutocompleteStrategy";
+import ContextualAutocomplete from "../Employee/ContextualAutocomplete";
 
 interface MapUserFormProps {
   kcUser: KcUserDto;
 }
 export default function MapUserForm(props: MapUserFormProps) {
   const { mapUserCmd } = useUserService();
-  const [user, setUser] = useState<UsUserDto | null>(null);
-  const [employee, setEmployee] = useState<Employee | null>(null);
+  const [option, setOption] = useState<AutocompleteOption | null>(null);
   const [error, setError] = useState("");
-  const [application, setApplication] = useState<"rh" | "regulation">("rh");
+  const [application, setApplication] = useState<ContextKey>("RH");
 
   const handleSubmit = async () => {
-    if (!user && !employee) return setError("Selectionner un utilisateur");
+    if (!option) return setError("Selectionner un utilisateur");
 
     const cmd: MapUserCmd = {
-      EmployeeID: user?.EmployeeId || employee?.id || 0,
+      EmployeeID: parseInt(option?.id ?? "0"),
       KeyCloackId: props.kcUser.id,
-      SocietyId: user?.SocietyId.toString() || "",
+      SocietyId: "",
     };
 
     await mapUserCmd.mutateAsync({ ...cmd, application });
     console.log("all good");
-    setUser(null);
+    setOption(null);
   };
+
+  const { data } = useAutocompleteOptions({ context: application });
+  console.log("data from form ", data);
 
   return (
     <Stack gap={2}>
@@ -52,18 +60,22 @@ export default function MapUserForm(props: MapUserFormProps) {
           size="small"
           onChange={(e) => setApplication(e.target.value)}
         >
-          <MenuItem value="rh">rh</MenuItem>
-          <MenuItem value="regulation">regulation</MenuItem>
+          <MenuItem value="RH">rh</MenuItem>
+          <MenuItem value="REGULATION">regulation</MenuItem>
         </Select>
       </FormControl>
-      {application == "rh" ? (
+      <ContextualAutocomplete
+        context={application}
+        autocompleteProps={{ onChange: (_e, o) => setOption(o), value: option }}
+      />
+      {/* {application == "RH" ? (
         <EmployeesAutocomplete
           onChange={(_e, v) => setEmployee(v)}
           value={employee}
         />
       ) : (
         <UsersAutocomplete onChange={(_e, v) => setUser(v)} value={user} />
-      )}
+      )} */}
       {error && (
         <Typography variant="caption" color="error">
           {error}

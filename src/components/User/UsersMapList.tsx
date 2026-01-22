@@ -24,6 +24,7 @@ export default function UsersMapList() {
   if (usersMapQry.isError) return <ErrorHandler error={usersMapQry.error} />;
 
   const usersMap = usersMapQry.data ?? [];
+  console.log("User map ", usersMap);
 
   const filteredUsersMap = search
     ? usersMap.filter(
@@ -33,7 +34,7 @@ export default function UsersMapList() {
             .includes(search.toLowerCase()) ||
           getUserName(u.EmployeeID)
             ?.toLowerCase()
-            .includes(search.toLowerCase())
+            .includes(search.toLowerCase()),
       )
     : usersMap;
 

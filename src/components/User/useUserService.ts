@@ -1,17 +1,18 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { deleteUserMap, getUsers, getUsersMap, mapUser } from "./User.api";
 import { enqueueSnackbar } from "notistack";
+import { queryClient } from "../../queryClient";
 
 export default function useUserService() {
   const userQry = useQuery({
-    queryKey: ["users", 1],
-    queryFn: () => getUsers("1"),
+    queryKey: ["users"],
+    queryFn: () => getUsers(),
   });
 
   const users = userQry.data ?? [];
 
   const usersMapQry = useQuery({
-    queryKey: ["users"],
+    queryKey: ["userMaps"],
     queryFn: () => getUsersMap(),
   });
 
@@ -25,7 +26,10 @@ export default function useUserService() {
   const deleteUserMapCmd = useMutation({
     mutationKey: ["users"],
     mutationFn: (mapId: number) => deleteUserMap(mapId),
-    onSuccess: () => enqueueSnackbar("All good", { variant: "success" }),
+    onSuccess: () => {
+      enqueueSnackbar("All good", { variant: "success" });
+      queryClient.invalidateQueries({ queryKey: ["userMaps"] });
+    },
     onError: () => enqueueSnackbar("Goes wrong", { variant: "error" }),
   });
 

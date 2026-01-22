@@ -24,11 +24,9 @@ export default function EmployeesAutocomplete(
       : [];
 
   if (EmployeeQry.isLoading) return <Skeleton variant="text" width={200} />;
-  console.log("emp query error", EmployeeQry.isError);
   if (EmployeeQry.isError) return <ErrorHandler error={EmployeeQry.error} />;
 
   const employees = EmployeeQry.data ?? [];
-  console.log("emplouers", employees);
 
   return (
     <Autocomplete

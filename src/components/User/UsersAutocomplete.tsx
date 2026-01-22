@@ -27,7 +27,6 @@ export default function UsersAutocomplete(
   if (userQry.isError) return <ErrorHandler error={userQry.error} />;
 
   const users = userQry.data ?? [];
-  console.log("users ", users);
 
   return (
     <Autocomplete
