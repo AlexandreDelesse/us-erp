@@ -12,7 +12,7 @@ export const mapUser = async (
   cmd: MapUserCmd & { application: ContextKey },
 ) => {
   const { application, ...rest } = cmd;
-  return (await regulApi.post(`Users/Map/${cmd.application}`, rest)).data;
+  return (await regulApi.post(`Users/Map/${application}`, rest)).data;
 };
 
 export const deleteUserMap = async (mapId: number) =>

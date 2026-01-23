@@ -19,5 +19,3 @@ export interface MapUserCmd {
 export interface MapUserDto extends MapUserCmd {
   MapId: number;
 }
-
-export interface DeleteUserMapCmd extends MapUserCmd {}

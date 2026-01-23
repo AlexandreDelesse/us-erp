@@ -53,7 +53,7 @@ export default function CrudDataGrid<T>(props: CrudDataGridProps<T>) {
   useEffect(() => setRows(props.rows ? [...props.rows] : []), [props.rows]);
 
   const handleDeleteClick = (row: T) => {
-    props.onDelete && props.onDelete(row);
+    return props.onDelete && props.onDelete(row);
   };
 
   const withAction = (cols: readonly GridColDef[]) => {
@@ -89,7 +89,7 @@ export default function CrudDataGrid<T>(props: CrudDataGridProps<T>) {
       onProcessRowUpdateError={(e) => console.log(e)}
       showToolbar
       editMode="row"
-      sx={{minHeight: 300}}
+      sx={{ minHeight: 300 }}
     />
   );
 }

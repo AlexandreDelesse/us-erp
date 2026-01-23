@@ -8,12 +8,9 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import UsersAutocomplete from "./UsersAutocomplete";
 import useUserService from "./useUserService";
-import type { MapUserCmd, UsUserDto } from "./User";
+import type { MapUserCmd } from "./User";
 import type { KcUserDto } from "../../Keycloak/KcUser";
-import EmployeesAutocomplete from "../Employee/EmployeesAutocomplete";
-import type { Employee } from "../Employee/Employee";
 import useAutocompleteOptions from "../Employee/useAutocompleteOptions";
 import type {
   AutocompleteOption,

@@ -3,19 +3,21 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { frFR } from "@mui/x-date-pickers/locales";
- // pour afficher en français
+// pour afficher en français
 
-interface CustomDatePickerProps
-  extends Omit<TextFieldProps, "value" | "onChange"> {
+interface CustomDatePickerProps extends Omit<
+  TextFieldProps,
+  "value" | "onChange"
+> {
   value: Date | null;
-  onChange: (newDate: Date | null) => void;
+  // onChange: (newDate: Date | null) => void;
   label?: string;
   disabled?: boolean;
 }
 
 export default function CustomDatePicker({
   value,
-  onChange,
+  // onChange,
   label,
   disabled,
   ...textFieldProps
@@ -24,7 +26,6 @@ export default function CustomDatePicker({
     <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={frFR}>
       <DatePicker
         value={value}
-        // onChange={onChange}
         label={label}
         disabled={disabled}
         slotProps={{

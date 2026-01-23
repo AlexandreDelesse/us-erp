@@ -61,7 +61,7 @@ export function useDeleteConcentrator() {
       queryClient.invalidateQueries({ queryKey: ["concentrators"] });
     },
 
-    onError: (_err) =>
+    onError: () =>
       enqueueSnackbar("Suppression non implémenté", { variant: "error" }),
   });
 }

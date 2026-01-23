@@ -15,7 +15,7 @@ import ImmatFormatter from "./Utils/ImmatFormatter";
 
 interface VehiculeListProps {
   selectedVehicle?: IVehicle | undefined;
-  onSelectVehicle?: (v: IVehicle) => any;
+  onSelectVehicle?: (v: IVehicle) => void;
 }
 export default function VehicleList(props: VehiculeListProps) {
   const req = useGetVehicles();

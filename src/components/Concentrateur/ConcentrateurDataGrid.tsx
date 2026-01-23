@@ -15,11 +15,11 @@ interface ConcentrateurDataGridProps {
   emptyModel: Concentrateur;
 }
 export default function ConcentrateurDataGrid(
-  props: ConcentrateurDataGridProps
+  props: ConcentrateurDataGridProps,
 ) {
   const { enqueueSnackbar } = useSnackbar();
   const [rows, setRows] = useState<(Concentrateur & { isNew?: boolean })[]>(
-    props.concentrateurs
+    props.concentrateurs,
   );
   const [rowModeModels, setRowModeModels] = useState({});
 
@@ -38,7 +38,7 @@ export default function ConcentrateurDataGrid(
   };
 
   const processRowUpdate = async (
-    newRow: Concentrateur & { isNew?: boolean }
+    newRow: Concentrateur & { isNew?: boolean },
   ) => {
     console.log("new row process", newRow);
     if (!newRow.AmcId || !newRow.AmoId || !newRow.AmoStart)
@@ -46,18 +46,18 @@ export default function ConcentrateurDataGrid(
 
     try {
       if (newRow.isNew) {
-        let { isNew, ...r } = newRow;
+        const { ...r } = newRow;
         r.Id = 0;
         r.AmoEnd = r.AmoEnd == "" ? null : r.AmoEnd;
         await props.onCreate(r);
       } else {
-        let { isNew, ...r } = newRow;
+        const { ...r } = newRow;
         r.AmoEnd = r.AmoEnd == "" ? null : r.AmoEnd;
         await props.onUpdate(r);
       }
       // Remet la ligne dans l’état "non nouveau"
       setRows((prev) =>
-        prev.map((r) => (r.Id === newRow.Id ? { ...newRow, isNew: false } : r))
+        prev.map((r) => (r.Id === newRow.Id ? { ...newRow, isNew: false } : r)),
       );
       return newRow;
     } catch (error) {

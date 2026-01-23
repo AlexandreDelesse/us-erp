@@ -69,7 +69,7 @@ export function useDeleteMutuelle() {
       queryClient.invalidateQueries({ queryKey: ["mutuelles"] });
     },
 
-    onError: (_err) =>
+    onError: () =>
       enqueueSnackbar("Suppression non implémenté", { variant: "error" }),
   });
 }

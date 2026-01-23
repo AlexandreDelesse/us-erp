@@ -17,7 +17,7 @@ interface MutuelleDataGridProps {
 export default function MutuelleDataGrid(props: MutuelleDataGridProps) {
   const { enqueueSnackbar } = useSnackbar();
   const [rows, setRows] = useState<(Mutuelle & { isNew?: boolean })[]>(
-    props.mutuelles
+    props.mutuelles,
   );
   const [rowModeModels, setRowModeModels] = useState({});
 
@@ -37,24 +37,20 @@ export default function MutuelleDataGrid(props: MutuelleDataGridProps) {
   const processRowUpdate = async (newRow: Mutuelle & { isNew?: boolean }) => {
     if (!newRow.AMC || !newRow.Name || !newRow.TeletransNumber)
       throw new Error("Tous les champs doivent être saisies !");
-    try {
-      if (newRow.isNew) {
-        let { isNew, ...r } = newRow;
-        r.ID = 0;
-        await props.onCreate(r);
-      } else {
-        let { isNew, ...r } = newRow;
 
-        await props.onUpdate(r);
-      }
-      // Remet la ligne dans l’état "non nouveau"
-      setRows((prev) =>
-        prev.map((r) => (r.ID === newRow.ID ? { ...newRow, isNew: false } : r))
-      );
-      return newRow;
-    } catch (error) {
-      throw error;
+    if (newRow.isNew) {
+      const { ...r } = newRow;
+      r.ID = 0;
+      await props.onCreate(r);
+    } else {
+      const { ...r } = newRow;
+      await props.onUpdate(r);
     }
+    // Remet la ligne dans l’état "non nouveau"
+    setRows((prev) =>
+      prev.map((r) => (r.ID === newRow.ID ? { ...newRow, isNew: false } : r)),
+    );
+    return newRow;
   };
 
   const columns: GridColDef[] = [

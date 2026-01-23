@@ -1,4 +1,4 @@
-import type { UserQry, UsUserDto } from "../User/User";
+import type { UsUserDto } from "../User/User";
 import { getUsers } from "../User/User.api";
 import type { Employee } from "./Employee";
 import { getEmployees } from "./Employee.api";

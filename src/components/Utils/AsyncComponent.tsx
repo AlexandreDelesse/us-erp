@@ -3,13 +3,13 @@ import { type ReactNode } from "react";
 import LogoLoader from "./LogoLoader";
 import ErrorHandler from "./Error/ErrorHandler";
 
-interface AsyncComponentProps {
-  query: { isLoading: boolean; error: Error | AxiosError | null; data: any };
+interface AsyncComponentProps<T> {
+  query: { isLoading: boolean; error: Error | AxiosError | null; data: T };
   render404?: ReactNode;
-  render: (data: any) => ReactNode;
+  render: (data: T) => ReactNode;
   renderLoading?: ReactNode;
 }
-export default function AsyncComponent(props: AsyncComponentProps) {
+export default function AsyncComponent<T>(props: AsyncComponentProps<T>) {
   const { query, render, render404 } = props;
 
   if (query.isLoading) return props.renderLoading || <LogoLoader />;
