@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { enableUser, getUsers } from "./Keycloak.api";
+import { enableUser, getKeycloakUsers } from "./Keycloak.api";
 import type { KcUserDto } from "./KcUser";
 import type { AxiosError } from "axios";
 import { enqueueSnackbar } from "notistack";
@@ -9,7 +9,7 @@ import { queryClient } from "../queryClient";
 export default function useKeycloakService() {
   const userQuery = useQuery<KcUserDto[], AxiosError>({
     queryKey: ["kcUsers"],
-    queryFn: getUsers,
+    queryFn: getKeycloakUsers,
   });
 
   const userMutation = useMutation({

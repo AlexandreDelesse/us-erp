@@ -19,3 +19,11 @@ export interface MapUserCmd {
 export interface MapUserDto extends MapUserCmd {
   MapId: number;
 }
+
+export interface User {
+  keycloakId?: string;
+  userId?: number;
+  email: string;
+  firstname?: string;
+  lastname?: string;
+}

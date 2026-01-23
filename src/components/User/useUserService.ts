@@ -1,12 +1,23 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { deleteUserMap, getUsers, getUsersMap, mapUser } from "./User.api";
+import { getKeycloakUsers } from "../../Keycloak/Keycloak.api";
 import { enqueueSnackbar } from "notistack";
 import { queryClient } from "../../queryClient";
+import { getEmployees } from "../Employee/Employee.api";
+import { mergeUsers } from "./User.tools";
 
 export default function useUserService() {
   const userQry = useQuery({
     queryKey: ["users"],
-    queryFn: () => getUsers(),
+    queryFn: async () => {
+      const domainUsers = (await getEmployees()).map((u) => ({
+        ...u,
+        keycloakId: "",
+      }));
+      const kcUsers = await getKeycloakUsers();
+      const users = mergeUsers(kcUsers, domainUsers);
+      return users;
+    },
   });
 
   const users = userQry.data ?? [];
@@ -33,11 +44,18 @@ export default function useUserService() {
     onError: () => enqueueSnackbar("Goes wrong", { variant: "error" }),
   });
 
-  const userMapMap = new Map<number, string>(
-    users.map((u) => [u.EmployeeId, u.EmployeeLabel]),
-  );
+  // const userMapMap = new Map<number, string>(
+  //   users.map((u) => [u.EmployeeId, u.EmployeeLabel]),
+  // );
 
-  const getUserName = (id: number) => userMapMap.get(id);
+  const getUserName = (id: number) => "";
 
-  return { userQry, mapUserCmd, deleteUserMapCmd, usersMapQry, getUserName };
+  return {
+    userQry,
+    users,
+    mapUserCmd,
+    deleteUserMapCmd,
+    usersMapQry,
+    getUserName,
+  };
 }

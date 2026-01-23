@@ -3,4 +3,5 @@ export interface Employee {
   nom: string;
   prenom: string;
   dateNaissance: string;
+  keycloakId: string;
 }
