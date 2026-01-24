@@ -19,7 +19,7 @@ function App() {
           <Route path="/" element={<Dashboard />}></Route>
           <Route path="/emprunts" element={<LoanPage />} />
           <Route path="/users" element={<UserPage />} />
-          <Route path="/userDetails" element={<UserDetailsPage />} />
+          <Route path="/userDetails/:userRef" element={<UserDetailsPage />} />
 
           <Route path="/vehicules" element={<VehiclePage />} />
           <Route path="/SaisieMutuelle" element={<SaisieMutuellePage />} />

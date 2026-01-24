@@ -7,11 +7,6 @@ export const mergeUsers = (
   domainUsers: Employee[],
 ): User[] => {
   const alreadyRegistered: User[] = domainUsers
-    .map((u) =>
-      u.id == 1249
-        ? { ...u, keycloakId: "bbedb86c-9710-4984-8d50-7122e5244c28" }
-        : u,
-    )
     .filter((u) => !!u.keycloakId && kcUsers.find((k) => k.id == u.keycloakId))
     .map((u) => ({
       email: "",
@@ -19,6 +14,7 @@ export const mergeUsers = (
       lastname: u.nom,
       keycloakId: u.keycloakId,
       userId: u.id,
+      userRef: getUserRef(u.keycloakId, u.id),
     }));
   const notRegistered: User[] = domainUsers
     .filter((u) => !u.keycloakId)
@@ -28,6 +24,7 @@ export const mergeUsers = (
       lastname: u.nom,
       keycloakId: u.keycloakId,
       userId: u.id,
+      userRef: getUserRef(u.keycloakId, u.id),
     }));
   const kcFiltered: User[] = kcUsers
     .filter((u) => !alreadyRegistered.map((u) => u.keycloakId).includes(u.id))
@@ -36,9 +33,18 @@ export const mergeUsers = (
       keycloakId: u.id,
       firstname: u.firstName,
       lastname: u.lastName,
+      emailVerified: u.emailVerified,
+      enabled: u.enabled,
+      userRef: getUserRef(u.id, undefined),
     }));
 
   const users: User[] = [...alreadyRegistered, ...notRegistered, ...kcFiltered];
 
   return users;
+};
+
+export const getUserRef = (kcId?: string, uId?: number) => {
+  if (kcId && uId) return `ENROLLED:${kcId}:${uId}`;
+  if (kcId) return `KC:${kcId}`;
+  return `US:${uId}`;
 };

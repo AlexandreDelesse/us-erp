@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { deleteUserMap, getUsers, getUsersMap, mapUser } from "./User.api";
-import { getKeycloakUsers } from "../../Keycloak/Keycloak.api";
+import { deleteUserMap, getUsersMap, mapUser } from "./User.api";
+import { getKeycloakUsers } from "./KeycloakAdministration/KeycloakAdministration.api";
 import { enqueueSnackbar } from "notistack";
 import { queryClient } from "../../queryClient";
 import { getEmployees } from "../Employee/Employee.api";
@@ -21,6 +21,8 @@ export default function useUserService() {
   });
 
   const users = userQry.data ?? [];
+
+  const getUserByRef = (ref: string) => users.find((u) => u.userRef === ref);
 
   const usersMapQry = useQuery({
     queryKey: ["userMaps"],
@@ -57,5 +59,6 @@ export default function useUserService() {
     deleteUserMapCmd,
     usersMapQry,
     getUserName,
+    getUserByRef,
   };
 }

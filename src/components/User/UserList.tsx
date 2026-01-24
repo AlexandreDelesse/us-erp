@@ -65,6 +65,8 @@ function UserList() {
     );
   };
 
+  console.log(filteredUsers);
+
   return (
     <>
       <TextField
@@ -110,8 +112,8 @@ function UserList() {
           <TableBody>
             {filteredUsers.map((u) => (
               <TableRow
-                key={`${u.keycloakId}-${u.userId}`}
-                onClick={() => navigate("/userDetails", { state: { user: u } })}
+                key={u.userRef}
+                onClick={() => navigate(`/userDetails/${u.userRef}`)}
                 hover
               >
                 <TableCell width={64}>

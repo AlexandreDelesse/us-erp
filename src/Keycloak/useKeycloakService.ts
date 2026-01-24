@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { enableUser, getKeycloakUsers } from "./Keycloak.api";
+import { enableUser, getKeycloakUsers } from "../components/User/KeycloakAdministration/KeycloakAdministration.api";
 import type { KcUserDto } from "./KcUser";
 import type { AxiosError } from "axios";
 import { enqueueSnackbar } from "notistack";
