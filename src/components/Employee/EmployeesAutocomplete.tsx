@@ -1,5 +1,7 @@
 import {
   Autocomplete,
+  Button,
+  MenuItem,
   Skeleton,
   TextField,
   type AutocompleteProps,
@@ -10,7 +12,9 @@ import type { Employee } from "./Employee";
 import useEmployeeService from "./useEmployeeService";
 
 export default function EmployeesAutocomplete(
-  props: Partial<AutocompleteProps<Employee, false, false, false>>,
+  props: Partial<AutocompleteProps<Employee, false, false, false>> & {
+    onNoOptionClick: () => void;
+  },
 ) {
   const [inputValue, setInputValue] = useState("");
 
@@ -22,6 +26,10 @@ export default function EmployeesAutocomplete(
           opt.nom.toLowerCase().includes(inputValue.toLowerCase()),
         )
       : [];
+
+  const handleNoOptionClick = () => {
+    props.onNoOptionClick();
+  };
 
   if (EmployeeQry.isLoading) return <Skeleton variant="text" width={200} />;
   if (EmployeeQry.isError) return <ErrorHandler error={EmployeeQry.error} />;
@@ -37,10 +45,12 @@ export default function EmployeesAutocomplete(
         <TextField sx={{ minWidth: "150px" }} {...params} label="Personnel" />
       )}
       size="small"
-      getOptionLabel={(u) => u.nom}
+      getOptionLabel={(u) => `${u.nom.toUpperCase()} ${u.prenom}`}
       getOptionKey={(u) => u.id}
       filterOptions={filterOptions}
-      noOptionsText="Aucun utilisateur"
+      noOptionsText={
+        <MenuItem onClick={handleNoOptionClick}>Créer utilisateur</MenuItem>
+      }
     />
   );
 }

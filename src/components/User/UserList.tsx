@@ -65,7 +65,6 @@ function UserList() {
     );
   };
 
-  console.log(filteredUsers);
 
   return (
     <>
