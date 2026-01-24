@@ -18,26 +18,21 @@ import EmployeesAutocomplete from "../components/Employee/EmployeesAutocomplete"
 import { useState } from "react";
 import type { Employee } from "../components/Employee/Employee";
 
-interface Props {}
-
-function UserDetailsPage(props: Props) {
-  const {} = props;
-
+function UserDetailsPage() {
   const { userRef } = useParams<{ userRef: string }>();
   const { getUserByRef } = useUserService();
   const { userEmailVerifiedMutation, userEnabledMutation } =
-    useKeycloakAdministrationService({});
+    useKeycloakAdministrationService();
+  const [employeeSelected, setEmployeeSelected] = useState<Employee | null>(
+    null,
+  );
+  const [openModal, setOpenModal] = useState(false);
 
   if (!userRef) return <Navigate to={"/users"} replace />;
 
   const user = getUserByRef(userRef);
 
   if (!user) return <Navigate to={"/users"} replace />;
-
-  const [employeeSelected, setEmployeeSelected] = useState<Employee | null>(
-    null,
-  );
-  const [openModal, setOpenModal] = useState(false);
 
   const handleOnUpdateEmailVerified = (newValue: boolean) => {
     if (!user.keycloakId) return;

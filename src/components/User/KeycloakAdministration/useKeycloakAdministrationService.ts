@@ -3,10 +3,8 @@ import { enableUser, updateEmailVerified } from "./KeycloakAdministration.api";
 import { enqueueSnackbar } from "notistack";
 import { queryClient } from "../../../queryClient";
 
-interface Props {}
 
-function useKeycloakAdministrationService(props: Props) {
-  const {} = props;
+function useKeycloakAdministrationService() {
 
   const userEmailVerifiedMutation = useMutation({
     mutationKey: ["userAdministration", "emailVerified"],

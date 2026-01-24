@@ -50,7 +50,7 @@ export default function useUserService() {
   //   users.map((u) => [u.EmployeeId, u.EmployeeLabel]),
   // );
 
-  const getUserName = (id: number) => "";
+  const getUserName = () => "";
 
   return {
     userQry,

@@ -32,7 +32,7 @@ export default function UsersMapList() {
           getKcUserName(u.KeyCloackId)
             ?.toLocaleLowerCase()
             .includes(search.toLowerCase()) ||
-          getUserName(u.EmployeeID)
+          getUserName()
             ?.toLowerCase()
             .includes(search.toLowerCase()),
       )
@@ -72,7 +72,7 @@ export default function UsersMapList() {
                   secondary={u.KeyCloackId}
                 />
               </TableCell>
-              <TableCell>{getUserName(u.EmployeeID)}</TableCell>
+              <TableCell>{getUserName()}</TableCell>
               <TableCell>
                 <IconButton
                   onClick={() => deleteUserMapCmd.mutate(u.MapId)}

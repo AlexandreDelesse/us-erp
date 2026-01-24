@@ -7,19 +7,19 @@ import {
 import useUserService from "./useUserService";
 import ErrorHandler from "../Utils/Error/ErrorHandler";
 import { useState } from "react";
-import type { UsUserDto } from "./User";
+import type { User } from "./User";
 
 export default function UsersAutocomplete(
-  props: Partial<AutocompleteProps<UsUserDto, false, false, false>>,
+  props: Partial<AutocompleteProps<User, false, false, false>>,
 ) {
   const [inputValue, setInputValue] = useState("");
 
   const { userQry } = useUserService();
 
-  const filterOptions = (opts: UsUserDto[]) =>
+  const filterOptions = (opts: User[]) =>
     inputValue
       ? opts.filter((opt) =>
-          opt.EmployeeLabel.toLowerCase().includes(inputValue.toLowerCase()),
+          opt.email.toLowerCase().includes(inputValue.toLowerCase()),
         )
       : [];
 
@@ -37,8 +37,8 @@ export default function UsersAutocomplete(
         <TextField sx={{ minWidth: "150px" }} {...params} label="User" />
       )}
       size="small"
-      getOptionLabel={(u) => u.EmployeeLabel}
-      getOptionKey={(u) => u.EmployeeId}
+      getOptionLabel={(u) => u.email}
+      getOptionKey={(u) => u.email}
       filterOptions={filterOptions}
       noOptionsText="Aucun utilisateur"
     />

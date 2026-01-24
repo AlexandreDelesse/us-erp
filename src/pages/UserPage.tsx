@@ -1,4 +1,4 @@
-import { Box, Divider, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 
 import UserList from "../components/User/UserList";
 
