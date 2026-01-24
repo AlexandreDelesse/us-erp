@@ -9,19 +9,21 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
 } from "@mui/material";
 import useUserService from "./useUserService";
 import LogoLoader from "../Utils/LogoLoader";
 import ErrorHandler from "../Utils/Error/ErrorHandler";
 import logoUs from "../../assets/Images/logo-us.png";
 import logoKc from "../../assets/Images/logo-kc.png";
+import logoEnrolled from "../../assets/Images/logo-enrolled.png";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
-interface Props {}
-
-function UserList(props: Props) {
-  const {} = props;
+function UserList() {
   type UserFilter = "KC" | "US" | "ENROLLED";
+
+  const navigate = useNavigate();
 
   const { users, userQry } = useUserService();
   const [filters, setFilters] = useState<UserFilter[]>([
@@ -29,24 +31,31 @@ function UserList(props: Props) {
     "US",
     "ENROLLED",
   ]);
+  const [search, setSearch] = useState("");
 
   if (userQry.isLoading) return <LogoLoader />;
   if (userQry.isError) return <ErrorHandler error={userQry.error} />;
 
   const getUserCategory = (user: {
-    kcId?: string;
+    keycloakId?: string;
     userId?: number;
   }): UserFilter => {
-    if (user.kcId && user.userId) return "ENROLLED";
-    if (user.kcId) return "KC";
+    if (user.keycloakId && user.userId) return "ENROLLED";
+    if (user.keycloakId) return "KC";
     return "US";
   };
 
-  const filteredUsers = users.filter((user) =>
-    filters.includes(getUserCategory(user)),
-  );
-
-  console.log(filteredUsers);
+  const filteredUsers = users
+    .filter((user) => filters.includes(getUserCategory(user)))
+    .filter((u) => {
+      if (!search) return true;
+      return (
+        u.firstname?.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
+        u.lastname?.toLocaleLowerCase().includes(search.toLocaleLowerCase()) ||
+        u.email.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+      );
+    })
+    .slice(0, 25);
 
   const toggleFilter = (context: UserFilter) => {
     setFilters((prev) =>
@@ -58,7 +67,15 @@ function UserList(props: Props) {
 
   return (
     <>
-      <Stack mt={2} spacing={2} direction="row">
+      <TextField
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        size="small"
+        variant="standard"
+        sx={{ my: 2 }}
+        placeholder="Rechercher..."
+      />
+      <Stack spacing={2} direction="row">
         <Chip
           onClick={() => toggleFilter("US")}
           avatar={<Avatar alt="Urgence sante" src={logoUs} />}
@@ -73,11 +90,12 @@ function UserList(props: Props) {
         />
         <Chip
           onClick={() => toggleFilter("ENROLLED")}
-          avatar={<Avatar alt="Urgence sante" src={logoKc} />}
+          avatar={<Avatar alt="Urgence sante" src={logoEnrolled} />}
           label="Enrollé"
           variant={filters.includes("ENROLLED") ? "filled" : "outlined"}
         />
       </Stack>
+
       <TableContainer>
         <Table>
           <TableHead>
@@ -91,9 +109,13 @@ function UserList(props: Props) {
 
           <TableBody>
             {filteredUsers.map((u) => (
-              <TableRow>
-                <TableCell>
-                  <Grid container spacing={1}>
+              <TableRow
+                key={`${u.keycloakId}-${u.userId}`}
+                onClick={() => navigate("/userDetails", { state: { user: u } })}
+                hover
+              >
+                <TableCell width={64}>
+                  <Grid container spacing={0}>
                     <Grid size={6}>
                       {u.userId && (
                         <img

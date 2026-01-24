@@ -8,6 +8,7 @@ import SaisieMutuellePage from "./pages/SaisieMutuellePage";
 import LoanPage from "./pages/LoanPage";
 import UserPage from "./pages/UserPage";
 import TopAppBar from "./components/AppBar/TopAppBar";
+import UserDetailsPage from "./pages/UserDetailsPage";
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
           <Route path="/" element={<Dashboard />}></Route>
           <Route path="/emprunts" element={<LoanPage />} />
           <Route path="/users" element={<UserPage />} />
+          <Route path="/userDetails" element={<UserDetailsPage />} />
+
           <Route path="/vehicules" element={<VehiclePage />} />
           <Route path="/SaisieMutuelle" element={<SaisieMutuellePage />} />
         </Routes>
