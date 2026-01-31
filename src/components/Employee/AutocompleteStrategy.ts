@@ -28,8 +28,8 @@ export const strategies: Record<ContextKey, AutocompleteStrategy> = {
     fetch: async () => {
       const employees = await getEmployees();
       return employees.map((e: Employee) => ({
-        id: e.id.toString(),
-        label: `${e.nom} ${e.prenom}`,
+        id: e.employeeId.toString(),
+        label: `${e.fullName}`,
       }));
     },
   },

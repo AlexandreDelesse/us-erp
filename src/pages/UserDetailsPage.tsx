@@ -17,10 +17,12 @@ import useUserService from "../components/User/useUserService";
 import EmployeesAutocomplete from "../components/Employee/EmployeesAutocomplete";
 import { useState } from "react";
 import type { Employee } from "../components/Employee/Employee";
+import useEmployeeService from "../components/Employee/useEmployeeService";
 
 function UserDetailsPage() {
   const { userRef } = useParams<{ userRef: string }>();
   const { getUserByRef } = useUserService();
+  const { mapEmployeeMutation, createEmployeeMutation } = useEmployeeService();
   const { userEmailVerifiedMutation, userEnabledMutation } =
     useKeycloakAdministrationService();
   const [employeeSelected, setEmployeeSelected] = useState<Employee | null>(
@@ -52,7 +54,20 @@ function UserDetailsPage() {
   };
 
   const handleAssociateEmployee = () => {
-    alert("Not implemented");
+    if (!employeeSelected || !user.keycloakId) return;
+    mapEmployeeMutation.mutate({
+      employeeId: employeeSelected.employeeId,
+      keyCloackId: user.keycloakId,
+    });
+  };
+
+  const handleOnCreateEmployee = () => {
+    if (!user.firstname || !user.lastname) return;
+    createEmployeeMutation.mutate({
+      email: user.email,
+      firstName: user.firstname,
+      name: user.lastname,
+    });
   };
 
   const handleCreateEmployee = () => {
@@ -137,7 +152,9 @@ function UserDetailsPage() {
                       onNoOptionClick={handleCreateEmployee}
                     />
                     <Button
-                      disabled={!employeeSelected}
+                      disabled={
+                        !employeeSelected || mapEmployeeMutation.isPending
+                      }
                       variant="text"
                       onClick={handleAssociateEmployee}
                     >
@@ -156,9 +173,7 @@ function UserDetailsPage() {
           <TextField label="Email" size="small" value={user.email} />
           <TextField label="Prénom" size="small" value={user.firstname} />
           <TextField label="Nom" size="small" value={user.lastname} />
-          <Button onClick={() => alert("Not implemented")}>
-            Créer utilisateur
-          </Button>
+          <Button onClick={handleOnCreateEmployee}>Créer utilisateur</Button>
         </Stack>
       </Modal>
     </Container>

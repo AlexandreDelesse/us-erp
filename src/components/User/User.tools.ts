@@ -10,32 +10,35 @@ export const mergeUsers = (
     .filter((u) => !!u.keycloakId && kcUsers.find((k) => k.id == u.keycloakId))
     .map((u) => ({
       email: "",
-      firstname: u.prenom,
-      lastname: u.nom,
+      displayName: u.fullName,
+      firstname: u.fullName.split(" ")[1],
+      lastname: u.fullName.split(" ")[0],
       keycloakId: u.keycloakId,
-      userId: u.id,
-      userRef: getUserRef(u.keycloakId, u.id),
+      userId: u.employeeId,
+      userRef: getUserRef(u.keycloakId, u.employeeId),
     }));
   const notRegistered: User[] = domainUsers
     .filter((u) => !u.keycloakId)
     .map((u) => ({
       email: "",
-      firstname: u.prenom,
-      lastname: u.nom,
+      displayName: u.fullName,
       keycloakId: u.keycloakId,
-      userId: u.id,
-      userRef: getUserRef(u.keycloakId, u.id),
+      firstname: u.fullName.split(" ")[1],
+      lastname: u.fullName.split(" ")[0],
+      userId: u.employeeId,
+      userRef: getUserRef(u.keycloakId, u.employeeId),
     }));
   const kcFiltered: User[] = kcUsers
     .filter((u) => !alreadyRegistered.map((u) => u.keycloakId).includes(u.id))
-    .map((u) => ({
-      email: u.email,
-      keycloakId: u.id,
-      firstname: u.firstName,
-      lastname: u.lastName,
-      emailVerified: u.emailVerified,
-      enabled: u.enabled,
-      userRef: getUserRef(u.id, undefined),
+    .map((kcu) => ({
+      email: kcu.email,
+      keycloakId: kcu.id,
+      firstname: kcu.firstName,
+      lastname: kcu.lastName,
+      displayName: `${kcu.lastName.toUpperCase()} ${kcu.firstName}`,
+      emailVerified: kcu.emailVerified,
+      enabled: kcu.enabled,
+      userRef: getUserRef(kcu.id, undefined),
     }));
 
   const users: User[] = [...alreadyRegistered, ...notRegistered, ...kcFiltered];

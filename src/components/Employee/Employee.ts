@@ -1,7 +1,7 @@
 export interface Employee {
-  id: number;
-  nom: string;
-  prenom: string;
-  dateNaissance: string;
+  birthDate: string;
+  email: string;
+  employeeId: number;
+  fullName: string;
   keycloakId: string;
 }

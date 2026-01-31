@@ -22,7 +22,7 @@ export default function EmployeesAutocomplete(
   const filterOptions = (opts: Employee[]) =>
     inputValue
       ? opts.filter((opt) =>
-          opt.nom.toLowerCase().includes(inputValue.toLowerCase()),
+          opt.fullName.toLowerCase().includes(inputValue.toLowerCase()),
         )
       : [];
 
@@ -44,8 +44,8 @@ export default function EmployeesAutocomplete(
         <TextField sx={{ minWidth: "150px" }} {...params} label="Personnel" />
       )}
       size="small"
-      getOptionLabel={(u) => `${u.nom.toUpperCase()} ${u.prenom}`}
-      getOptionKey={(u) => u.id}
+      getOptionLabel={(u) => u.fullName}
+      getOptionKey={(u) => u.employeeId}
       filterOptions={filterOptions}
       noOptionsText={
         <MenuItem onClick={handleNoOptionClick}>Créer utilisateur</MenuItem>

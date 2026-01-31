@@ -26,7 +26,8 @@ export interface User {
   email: string;
   firstname?: string;
   lastname?: string;
+  displayName?: string;
   emailVerified?: boolean;
   enabled?: boolean;
-  userRef: string             //Pour identification unique peut importe si le User vient de KC ou US. 
+  userRef: string; //Pour identification unique peut importe si le User vient de KC ou US.
 }

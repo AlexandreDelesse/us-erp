@@ -65,7 +65,6 @@ function UserList() {
     );
   };
 
-
   return (
     <>
       <TextField
@@ -140,8 +139,8 @@ function UserList() {
                   </Grid>
                 </TableCell>
                 <TableCell>{u.email}</TableCell>
-                <TableCell>{u.firstname}</TableCell>
                 <TableCell>{u.lastname}</TableCell>
+                <TableCell>{u.firstname}</TableCell>
               </TableRow>
             ))}
           </TableBody>
