@@ -16,9 +16,11 @@ interface SimpleCardProps extends CardProps {
 }
 export default function SimpleCard(props: SimpleCardProps) {
   const { action, sx, ...otherprops } = props;
+
   const sxProps = sx ? { ...sx, borderRadius: 0 } : { borderRadius: 0 };
+
   return (
-    <Card variant="outlined" sx={sxProps} {...otherprops}>
+    <Card variant="outlined" sx={{...sxProps}} {...otherprops}>
       <CardHeader
         sx={{ alignItems: "center" }}
         title={props.title}
