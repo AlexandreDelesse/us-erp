@@ -18,6 +18,15 @@ function SubscriptionList(props: Props) {
   if (query.isLoading) return <LogoLoader />;
   if (query.isError) return <ErrorHandler error={query.error} />;
 
+  const sendUnitTestNotification = (endpoint: string) => {
+    const payload: PostNotificationApiRequest = {
+      title: "Notification de test !",
+      message: "A ne pas prendre en compte :)",
+      endpoints: [endpoint],
+    };
+    notifyMutation.mutate(payload);
+  };
+
   const sendTestNotification = () => {
     const payload: PostNotificationApiRequest = {
       title: "Notification de test !",
@@ -38,7 +47,21 @@ function SubscriptionList(props: Props) {
     <>
       <Stack spacing={2} direction="row">
         {subscriptions.map((sub) => (
-          <SubscriptionDisplayCard sub={sub} />
+          <SubscriptionDisplayCard
+            onClick={sendUnitTestNotification}
+            action={
+              <Button
+                onClick={() => sendUnitTestNotification(sub.endpoint)}
+                size="small"
+                sx={{ marginBottom: -1 }}
+                variant="outlined"
+                disabled={notifyMutation.isPending}
+              >
+                Test Notification
+              </Button>
+            }
+            sub={sub}
+          />
         ))}
       </Stack>
       <Button

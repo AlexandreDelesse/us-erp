@@ -19,7 +19,8 @@ export const getSubscriptionsByUserId = async (
 };
 
 export interface PostNotificationApiRequest {
-  userIds: string[];
+  userIds?: string[];
+  endpoints?: string[]
   title: string;
   message: string;
 }
